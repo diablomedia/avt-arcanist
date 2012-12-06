@@ -1,0 +1,1 @@
+curl -L https://raw.github.com/diablomedia/avt-arcanist/master/getarcanist.sh 2&> /dev/null | /bin/sh

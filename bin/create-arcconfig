@@ -1,0 +1,46 @@
+#!/bin/bash
+
+project_id=$1
+if [ -z $project_id ]; then
+    echo "Usage: $0 <project_id> [project_root_dir]";
+    exit
+fi
+
+root=$2
+if [ -z $root ]; then
+    root=$PWD
+fi
+
+root=$(dirname "$root")/$(basename "$root")
+
+arc_path="${root}/.arcconfig"
+
+if [ -e $arc_path ]; then
+  echo "There is already a configuration file at $arc_path."
+  echo -n "Do you want to continue and overwrite the existing file? [yN] "
+
+  read ok
+
+  if [[ $ok -ne "y" && $ok -ne "Y" ]]; then
+    exit 0
+  fi
+fi
+
+libavt_path=/usr/local/zend/include/php/libavt/src
+
+echo "Creating default .arcconfig at '$arc_path'"
+
+{ cat <<EOT
+{
+    "project_id": "$project_id",
+    "conduit_uri": "http://phab.diablomedia.corp/",
+    "lint.engine": "AvtLintEngine",
+    "lint.phpcs.standard": "build/phpcs.xml",
+    "unit.engine": "AvtPhpunitTestEngine",
+    "phpunit_config": "build/phpunit.xml",
+    "phutil_libraries" : {
+        "avt" : "$libavt_path"
+    }
+}
+EOT
+} > $arc_path
