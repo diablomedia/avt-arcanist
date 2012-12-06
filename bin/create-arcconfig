@@ -1,7 +1,7 @@
 #!/bin/bash
 
 project_id=$1
-if [ -z $project_id ]; then
+if [ -z "$project_id" ]; then
     echo "Usage: $0 <project_id> [project_root_dir]";
     exit
 fi
@@ -21,7 +21,7 @@ if [ -e $arc_path ]; then
 
   read ok
 
-  if [[ $ok -ne "y" && $ok -ne "Y" ]]; then
+  if [[ $ok != "y" && $ok != "Y" ]]; then
     exit 0
   fi
 fi
