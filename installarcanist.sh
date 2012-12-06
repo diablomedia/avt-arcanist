@@ -24,7 +24,7 @@ fi;
 # Install or update libphutil
 echo "Updating libphutil.."
 if [ -e "$PHP_DIR/libphutil" ]; then
-    arc upgrade
+    $BIN_DIR/arc upgrade
 else
     git clone git://github.com/facebook/libphutil.git "$PHP_DIR/libphutil"
     git clone git://github.com/facebook/arcanist.git "$PHP_DIR/arcanist"
