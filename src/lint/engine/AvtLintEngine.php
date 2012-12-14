@@ -16,13 +16,10 @@ class AvtLintEngine extends ArcanistLintEngine {
       if (!$this->pathExists($path)) {
         unset($paths[$key]);
       }
-      /* We can add exclusions here
-      if (preg_match('@^externals/@', $path)) {
-        // Third-party stuff lives in /externals/; don't run lint engines
-        // against it.
+      // Exclude minified files               
+      if (preg_match('|\.min\.|', $path)) {
         unset($paths[$key]);
       }
-      */
     }
 
     /*
