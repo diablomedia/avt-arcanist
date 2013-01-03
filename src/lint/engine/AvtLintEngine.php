@@ -48,8 +48,8 @@ class AvtLintEngine extends ArcanistLintEngine {
     $linters[] = id(new ArcanistFilenameLinter())->setPaths($paths);
 
     // Disable linting for any files with "generated" in the path
-    $linters[] = id(new ArcanistGeneratedLinter())
-      ->setPaths(preg_grep('/\.php$/', $paths));
+    $linters[] = id(new AvtGeneratedLinter())
+      ->setPaths($paths);
 
     // PHPCodeSniffer
     $linters[] = id(new ArcanistPhpcsLinter())
