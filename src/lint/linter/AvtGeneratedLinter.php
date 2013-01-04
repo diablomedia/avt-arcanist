@@ -25,9 +25,7 @@ final class AvtGeneratedLinter extends ArcanistLinter {
   }
 
   public function lintPath($path) {
-    $data = $this->getData($path);
-
-    if (preg_match('/[gG]enerated/', $data)) {
+    if (preg_match('/[gG]enerated/', $path)) {
       $this->stopAllLinters();
     }
   }
