@@ -26,7 +26,7 @@ if [ -e $arc_path ]; then
   fi
 fi
 
-libavt_path=/usr/local/zend/include/php/libavt/src
+libavt_path=/usr/share/php/libavt/src
 
 echo "Creating default .arcconfig at '$arc_path'"
 
