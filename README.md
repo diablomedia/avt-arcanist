@@ -3,7 +3,7 @@ AVT Libraries for Arcanist
 
 A collection of custom libraries and scripts for [Phabricator](http://phabricator.org/), a tool originally open sourced by Facebook for task management and code review.
 
-The scripts and documentation included in this repository were originally inspired by the [disqus-arcanist repository](https://github.com/disqus/discus-arcanist/).
+The scripts and documentation included in this repository were originally inspired by the [disqus-arcanist repository](https://github.com/disqus/disqus-arcanist/).
 
 Installing Arcanist Globally
 ============================
