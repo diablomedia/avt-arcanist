@@ -59,6 +59,10 @@ class AvtLintEngine extends ArcanistLintEngine {
     $linters[] = id(new ArcanistJSHintLinter())
       ->setPaths(preg_grep('/\.js$/', $paths));
 
+    // Puppet-lint
+    $linters[] = id(new AvtPuppetLintLinter())
+      ->setPaths(preg_grep('/\.pp$/', $paths));
+
     return $linters;
   }
 
