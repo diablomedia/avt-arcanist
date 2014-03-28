@@ -22,42 +22,11 @@ final class AvtPhpunitTestEngine extends ArcanistBaseUnitTestEngine
     {
 
         $this->projectRoot = $this->getWorkingCopy()->getProjectRoot();
-        /*$this->affectedTests = array();
-        foreach ($this->getPaths() as $path) {
-
-            $path = Filesystem::resolvePath($path, $this->projectRoot);
-
-            // TODO: add support for directories
-            // Users can call phpunit on the directory themselves
-            if (is_dir($path)) {
-                continue;
-            }
-
-            // Not sure if it would make sense to go further if
-            // it is not a .php file
-            if (substr($path, -4) != '.php') {
-                continue;
-            }
-
-            if (substr($path, -8) == 'Test.php') {
-                // Looks like a valid test file name.
-                $this->affectedTests[$path] = $path;
-                continue;
-            }
-
-            if ($test = $this->findTestFile($path)) {
-                $this->affectedTests[$path] = $test;
-            }
-        }
-
-        if (empty($this->affectedTests)) {
-            throw new ArcanistNoEffectException('No tests to run.');
-        }*/
 
         $this->prepareConfigFile();
         $futures = array();
         $tmpfiles = array();
-        //foreach ($this->affectedTests as $class_path => $test_path) {
+
         $json_tmp = new TempFile();
         $clover_tmp = null;
         $clover = null;
@@ -68,19 +37,35 @@ final class AvtPhpunitTestEngine extends ArcanistBaseUnitTestEngine
 
         $config = $this->configFile ? csprintf('-c %s', $this->configFile) : null;
 
-        $futures['tests/'] = new ExecFuture(
-            'phpunit %C --log-json %s %C %s',
-            $config,
-            $json_tmp,
-            $clover,
-            'tests/'
-            //$test_path
-        );
+        if ($config) {
+            $configContents = file_get_contents($this->configFile);
+        } else {
+            $configContents = '';
+        }
+
+        // This is hacky, but we don't want to specify the "tests" folder
+        // if the PHPUnit XML config contains testsuite definitions, phpunit
+        // obeys the settings in the file better if the path is excluded
+        if (stristr($configContents, '</testsuites>')) {
+            $futures['tests/'] = new ExecFuture(
+                'phpunit %C --log-json %s %C',
+                $config,
+                $json_tmp,
+                $clover
+            );
+        } else {
+            $futures['tests/'] = new ExecFuture(
+                'phpunit %C --log-json %s %C %s',
+                $config,
+                $json_tmp,
+                $clover,
+                'tests/'
+            );
+        }
         $tmpfiles['tests/'] = array(
             'json' => $json_tmp,
             'clover' => $clover_tmp,
         );
-        //}
 
         $results = array();
         foreach (Futures($futures)->limit(4) as $test => $future) {
