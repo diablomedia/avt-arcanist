@@ -13,6 +13,7 @@ phutil_register_library_map(array(
     'AvtGeneratedLinter' => 'lint/linter/AvtGeneratedLinter.php',
     'AvtLintEngine' => 'lint/engine/AvtLintEngine.php',
     'AvtPhpunitTestEngine' => 'unit/engine/AvtPhpunitTestEngine.php',
+    'AvtPuppetLintLinter' => 'lint/linter/AvtPuppetLintLinter.php',
   ),
   'function' =>
   array(
@@ -22,5 +23,6 @@ phutil_register_library_map(array(
     'AvtGeneratedLinter' => 'ArcanistLinter',
     'AvtLintEngine' => 'ArcanistLintEngine',
     'AvtPhpunitTestEngine' => 'ArcanistBaseUnitTestEngine',
+    'AvtPuppetLintLinter' => 'ArcanistExternalLinter',
   ),
 ));
