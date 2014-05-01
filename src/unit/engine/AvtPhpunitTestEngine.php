@@ -43,19 +43,24 @@ final class AvtPhpunitTestEngine extends ArcanistBaseUnitTestEngine
             $configContents = '';
         }
 
+        // Use vendor/bin/phpunit (composer installed phpunit) if it exists
+        // Otherwise use system installed phpunit
+        $composerPhpunit = $this->projectRoot . DIRECTORY_SEPARATOR . 'vendor' . DIRECTORY_SEPARATOR . 'bin' . DIRECTORY_SEPARATOR . 'phpunit';
+        $phpunitExec = (file_exists($composerPhpunit) ? $composerPhpunit : 'phpunit');
+
         // This is hacky, but we don't want to specify the "tests" folder
         // if the PHPUnit XML config contains testsuite definitions, phpunit
         // obeys the settings in the file better if the path is excluded
         if (stristr($configContents, '</testsuites>')) {
             $futures['tests/'] = new ExecFuture(
-                'phpunit %C --log-json %s %C',
+                $phpunitExec . ' %C --log-json %s %C',
                 $config,
                 $json_tmp,
                 $clover
             );
         } else {
             $futures['tests/'] = new ExecFuture(
-                'phpunit %C --log-json %s %C %s',
+                $phpunitExec . ' %C --log-json %s %C %s',
                 $config,
                 $json_tmp,
                 $clover,
