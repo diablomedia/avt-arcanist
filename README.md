@@ -10,7 +10,7 @@ Installing Arcanist Globally
 
 You'll need write access to /usr/local:
 
-    $ curl -L https://raw.github.com/diablomedia/avt-arcanist/master/getarcanist.sh | sudo sh
+    $ curl -L https://raw.githubusercontent.com/diablomedia/avt-arcanist/master/getarcanist.sh | sudo sh
 
 This will give you access to the following additional commands:
 
