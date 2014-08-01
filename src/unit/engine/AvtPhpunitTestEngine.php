@@ -17,6 +17,7 @@ final class AvtPhpunitTestEngine extends ArcanistBaseUnitTestEngine
     private $configFile;
     private $affectedTests;
     private $projectRoot;
+    private $phpunitBinary = 'phpunit';
 
     public function run()
     {
@@ -48,14 +49,14 @@ final class AvtPhpunitTestEngine extends ArcanistBaseUnitTestEngine
         // obeys the settings in the file better if the path is excluded
         if (stristr($configContents, '</testsuites>')) {
             $futures['tests/'] = new ExecFuture(
-                'phpunit %C --log-json %s %C',
+                $this->phpunitBinary . ' %C --log-json %s %C',
                 $config,
                 $json_tmp,
                 $clover
             );
         } else {
             $futures['tests/'] = new ExecFuture(
-                'phpunit %C --log-json %s %C %s',
+                $this->phpunitBinary . ' %C --log-json %s %C %s',
                 $config,
                 $json_tmp,
                 $clover,
@@ -393,18 +394,25 @@ final class AvtPhpunitTestEngine extends ArcanistBaseUnitTestEngine
     * Tries to find and update phpunit configuration file
     * based on phpunit_config option in .arcconfig
     */
-    private function prepareConfigFile()
-    {
-        $project_root = $this->projectRoot . DIRECTORY_SEPARATOR;
+    private function prepareConfigFile() {
+        $project_root = $this->projectRoot.DIRECTORY_SEPARATOR;
+        $config = $this->getConfigurationManager()->getConfigFromAnySource('phpunit_config');
 
-        if ($config = $this->getWorkingCopy()->getConfig('phpunit_config')) {
-            if (Filesystem::pathExists($project_root . $config)) {
-                $this->configFile = $project_root . $config;
+        if ($config) {
+            if (Filesystem::pathExists($project_root.$config)) {
+                $this->configFile = $project_root.$config;
             } else {
-                throw new Exception(
-                    'PHPUnit configuration file was not ' .
-                    'found in ' . $project_root . $config
-                );
+                throw new Exception('PHPUnit configuration file was not '.
+                    'found in ' . $project_root . $config);
+            }
+        }
+
+        $bin = $this->getConfigurationManager()->getConfigFromAnySource('unit.phpunit.binary');
+        if ($bin) {
+            if (Filesystem::binaryExists($bin)) {
+                $this->phpunitBinary = $bin;
+            } else {
+                $this->phpunitBinary = Filesystem::resolvePath($bin, $project_root);
             }
         }
     }
