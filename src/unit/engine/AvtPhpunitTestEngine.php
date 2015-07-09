@@ -95,11 +95,10 @@ final class AvtPhpunitTestEngine extends ArcanistUnitTestEngine {
    */
   private function parseTestResults($path, $json_tmp, $clover_tmp, $stderr) {
     $test_results = Filesystem::readFile($json_tmp);
-    return id(new ArcanistPhpunitTestResultParser())
+    return id(new AvtPhpunitTestResultParser())
       ->setEnableCoverage($this->getEnableCoverage())
       ->setProjectRoot($this->projectRoot)
       ->setCoverageFile($clover_tmp)
-      ->setAffectedTests($this->affectedTests)
       ->setStderr($stderr)
       ->parseTestResults($path, $test_results);
   }
