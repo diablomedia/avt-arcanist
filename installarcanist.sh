@@ -59,7 +59,7 @@ ln -fs "$ARC_PHP_DIR/libavt/bin/update-arcanist" "$ARC_BIN_DIR/update-arcanist"
 chmod +x "$ARC_BIN_DIR/update-arcanist"
 
 ## arc
-echo "php $ARC_PHP_DIR/arcanist/scripts/arcanist.php  --load-phutil-library='$ARC_PHP_DIR/libavt/src' \"\$@\"" > "$ARC_BIN_DIR/arc"
+ln -fs "$ARC_PHP_DIR/libavt/bin/arc" "$ARC_BIN_DIR/arc"
 chmod +x "$ARC_BIN_DIR/arc"
 
 echo "Done!"
