@@ -19,7 +19,7 @@ final class AvtPhpunitTestEngine extends ArcanistUnitTestEngine {
     $this->projectRoot = $this->getWorkingCopy()->getProjectRoot();
     $this->prepareConfigFile();
 
-    $json_tmp = new TempFile();
+    $junit_tmp = new TempFile();
     $clover_tmp = null;
     $clover = null;
     if ($this->getEnableCoverage() !== false) {
@@ -31,14 +31,14 @@ final class AvtPhpunitTestEngine extends ArcanistUnitTestEngine {
 
     $stderr = '-d display_errors=stderr';
 
-    $future = new ExecFuture('%C %C %C --log-json %s %C',
-      $this->phpunitBinary, $config, $stderr, $json_tmp, $clover);
+    $future = new ExecFuture('%C %C %C --log-junit %s %C',
+      $this->phpunitBinary, $config, $stderr, $junit_tmp, $clover);
 
     $results = array();
     list($err, $stdout, $stderr) = $future->resolve();
     $results[] = $this->parseTestResults(
       'everything',
-      $json_tmp,
+      $junit_tmp,
       $clover_tmp,
       $stderr);
 
@@ -46,17 +46,17 @@ final class AvtPhpunitTestEngine extends ArcanistUnitTestEngine {
   }
 
   /**
-   * Parse test results from phpunit json report.
+   * Parse test results from phpunit junit report.
    *
    * @param string $path Path to test
-   * @param string $json_tmp Path to phpunit json report
+   * @param string $junit_tmp Path to phpunit junit report
    * @param string $clover_tmp Path to phpunit clover report
    * @param string $stderr Data written to stderr
    *
    * @return array
    */
-  private function parseTestResults($path, $json_tmp, $clover_tmp, $stderr) {
-    $test_results = Filesystem::readFile($json_tmp);
+  private function parseTestResults($path, $junit_tmp, $clover_tmp, $stderr) {
+    $test_results = Filesystem::readFile($junit_tmp);
     return id(new AvtPhpunitTestResultParser())
       ->setEnableCoverage($this->getEnableCoverage())
       ->setProjectRoot($this->projectRoot)
