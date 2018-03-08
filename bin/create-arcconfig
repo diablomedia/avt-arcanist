@@ -38,9 +38,9 @@ echo "Creating default .arcconfig at '$arc_path'"
     "lint.phpcs.standard": "build/phpcs.xml",
     "unit.engine": "AvtPhpunitTestEngine",
     "phpunit_config": "build/phpunit.xml",
-    "phutil_libraries" : {
-        "avt" : "$libavt_path"
-    }
+    "load": [
+        "$libavt_path"
+    ]
 }
 EOT
 } > $arc_path
