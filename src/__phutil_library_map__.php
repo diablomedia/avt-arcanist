@@ -9,6 +9,7 @@
 phutil_register_library_map(array(
   '__library_version__' => 2,
   'class' => array(
+    'AvtComposerLinter' => 'lint/linter/AvtComposerLinter.php',
     'AvtGeneratedLinter' => 'lint/linter/AvtGeneratedLinter.php',
     'AvtLintEngine' => 'lint/engine/AvtLintEngine.php',
     'AvtPhpunitTestEngine' => 'unit/engine/AvtPhpunitTestEngine.php',
@@ -17,6 +18,7 @@ phutil_register_library_map(array(
   ),
   'function' => array(),
   'xmap' => array(
+    'AvtComposerLinter' => 'ArcanistLinter',
     'AvtGeneratedLinter' => 'ArcanistLinter',
     'AvtLintEngine' => 'ArcanistLintEngine',
     'AvtPhpunitTestEngine' => 'ArcanistUnitTestEngine',
