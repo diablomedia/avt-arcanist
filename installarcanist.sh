@@ -34,8 +34,8 @@ echo "Updating libphutil.."
 if [ -e "$ARC_PHP_DIR/libphutil" ]; then
     $ARC_BIN_DIR/arc upgrade
 else
-    git clone git://github.com/facebook/libphutil.git "$ARC_PHP_DIR/libphutil"
-    git clone git://github.com/facebook/arcanist.git "$ARC_PHP_DIR/arcanist"
+    git clone -b stable git://github.com/facebook/libphutil.git "$ARC_PHP_DIR/libphutil"
+    git clone -b stable git://github.com/facebook/arcanist.git "$ARC_PHP_DIR/arcanist"
     #git clone git://github.com/facebook/phabricator.git "$ARC_PHP_DIR/phabricator"
 fi
 
