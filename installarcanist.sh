@@ -29,14 +29,12 @@ if [ ! -e "$ARC_PHP_DIR" ]; then
     mkdir -p $ARC_PHP_DIR
 fi;
 
-# Install or update libphutil
-echo "Updating libphutil.."
-if [ -e "$ARC_PHP_DIR/libphutil" ]; then
+# Install or update arcanist
+echo "Updating arcanist.."
+if [ -e "$ARC_PHP_DIR/arcanist" ]; then
     $ARC_BIN_DIR/arc upgrade
 else
-    git clone git://github.com/facebook/libphutil.git "$ARC_PHP_DIR/libphutil"
-    git clone git://github.com/facebook/arcanist.git "$ARC_PHP_DIR/arcanist"
-    #git clone git://github.com/facebook/phabricator.git "$ARC_PHP_DIR/phabricator"
+    git clone git://github.com/phacility/arcanist.git "$ARC_PHP_DIR/arcanist"
 fi
 
 # Install or update libavt

@@ -1,7 +1,7 @@
 #!/bin/bash
 if [[ -n "$CONDUIT_TOKEN" ]]
 then
-    /usr/share/php/arcanist/scripts/arcanist.php --conduit-token=$CONDUIT_TOKEN "$@"
+    /usr/share/php/arcanist/bin/arc --conduit-token=$CONDUIT_TOKEN "$@"
 else
-    /usr/share/php/arcanist/scripts/arcanist.php "$@"
+    /usr/share/php/arcanist/bin/arc "$@"
 fi
