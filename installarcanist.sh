@@ -34,7 +34,7 @@ echo "Updating arcanist.."
 if [ -e "$ARC_PHP_DIR/arcanist" ]; then
     $ARC_BIN_DIR/arc upgrade
 else
-    git clone git@github.com:phacility/arcanist.git "$ARC_PHP_DIR/arcanist"
+    git clone https://github.com/phacility/arcanist.git "$ARC_PHP_DIR/arcanist"
 fi
 
 # Install or update libavt
@@ -42,7 +42,7 @@ echo "Updating libavt.."
 if [ -e "$ARC_PHP_DIR/libavt" ]; then
     cd "$ARC_PHP_DIR/libavt" && git pull origin master
 else
-    git clone git@github.com:diablomedia/avt-arcanist.git "$ARC_PHP_DIR/libavt"
+    git clone https://github.com/diablomedia/avt-arcanist.git "$ARC_PHP_DIR/libavt"
 fi
 
 # Register arc commands
