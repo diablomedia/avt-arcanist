@@ -33,7 +33,7 @@ echo "Creating default .arcconfig at '$arc_path'"
 { cat <<EOT
 {
     "project_id": "$project_id",
-    "conduit_uri": "http://phab.diablomedia.corp/",
+    "conduit_uri": "https://phorge.aws.onavt.net/",
     "lint.engine": "AvtLintEngine",
     "lint.phpcs.standard": "build/phpcs.xml",
     "unit.engine": "AvtPhpunitTestEngine",
